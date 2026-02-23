@@ -16,7 +16,7 @@ timezone: Asia/Seoul
 
 title: 백무송 개발 블로그 # the main title
 
-tagline: A text-focused Jekyll theme # it will display as the subtitle
+tagline: Tech blog of an aspiring Game Client Developer, Baek Musong # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
