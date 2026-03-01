@@ -14,7 +14,7 @@ order: 1
 
 ## 🎮 Projects
 
-### <h2 style="font-size: 36px;">1. EdgeDrive</h2>
+<h2 style="font-size: 36px;">1. EdgeDrive</h2>
 **3D 소울라이크 보스 러시 게임**  
 <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
   <iframe src="https://www.youtube.com/embed/264Wfi25UOU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
@@ -28,7 +28,7 @@ order: 1
 * **Engine:**Unreal Engine**
 * **Language:**C++, Blue Print**
 
-### 2. <h2 style="font-size: 36px;">Wothingthing</h2>
+<h2 style="font-size: 36px;">2. Wothingthing</h2>
 **Katana ZERO , ThingThing 스타일의 전투를 구현한 2D 액션 게임**
 <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
   <iframe src="https://www.youtube.com/embed/xpTpa-FO4aM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
