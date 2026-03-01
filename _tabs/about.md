@@ -2,7 +2,7 @@
 layout: page
 icon: fas fa-info-circle
 title: About
-order: 4
+order: 1
 ---
 ## 📎 이력서 및 포트폴리오
 저의 상세한 이력과 프로젝트 경험은 아래 링크에서 PDF 파일로 확인하실 수 있습니다.
