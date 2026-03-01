@@ -32,7 +32,7 @@ order: 1
 ### 2. Wothingthing
 **Katana ZERO , ThingThing 스타일의 전투를 구현한 2D 액션 게임**
 <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
-  <iframe src="https://www.youtube.com/watch?v=xpTpa-FO4aM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/xpTpa-FO4aM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
 </div>
 
 #### 🔗 링크
