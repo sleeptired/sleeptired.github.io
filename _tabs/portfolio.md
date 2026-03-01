@@ -7,12 +7,19 @@ order: 1
 ## 📎 이력서 및 포트폴리오
 저의 상세한 이력과 프로젝트 경험은 아래 링크에서 PDF 파일로 확인하실 수 있습니다.
 
-* [📄 백무송 이력서 다운로드](/GameClientDeveloper_MusongBaek_resume.pdf)
-* [📁 백무송 포트폴리오 다운로드](/GameClientDeveloper_MusongBaek_Portfolio.pdf)
+* [📄 백무송 이력서](/GameClientDeveloper_MusongBaek_resume.pdf)
+* [📁 백무송 포트폴리오](/GameClientDeveloper_MusongBaek_Portfolio.pdf)
 
 ---
 
-## 🛠️ Tech Stack
-* **Language:** C++, C#
-* **Engine:** Unity, Unreal Engine
-* **Etc:** Git, GitHub
+## 🎮 Projects
+
+### 1. EdgeDrive
+
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
+  <iframe src="https://www.youtube.com/embed/264Wfi25UOU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
+</div>
+
+#### 🔗 관련 링크
+* [📂 EdgeDrive 원본 프로젝트 파일 (Google Drive)](https://drive.google.com/file/d/1nDPpBFlDRhHof6jX3jZfb6eyEVYq1vxz/view?usp=drive_link)
+* [🎮 EdgeDrive 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/1MlNrUyBR4Y8X9iZbZRqJd8Fl0opmYGai/view?usp=drive_link)
