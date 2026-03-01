@@ -1,7 +1,7 @@
 ---
 layout: page
 icon: fas fa-info-circle
-title: About
+title: Portfolio
 order: 1
 ---
 ## 📎 이력서 및 포트폴리오
