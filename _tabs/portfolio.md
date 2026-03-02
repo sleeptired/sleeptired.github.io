@@ -37,7 +37,7 @@ order: 1
 #### 🔗 링크
 * [📂 Wothingthing 원본 프로젝트 파일 (Google Drive)](https://drive.google.com/file/d/1JqJfn6mwowD2WNpPFgHhzsHsGTzLTVS4/view?usp=drive_link)
 * [💻 Wothingthing GitHub Repository](https://github.com/Hwang-Ju-Hyun/WoThingThing)
-* [🎮 Wothingthing 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/1MlNrUyBR4Y8X9iZbZRqJd8Fl0opmYGai/view?usp=drive_link)
+* [🎮 Wothingthing 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/1SJOiHPMDVZq-0CyFuqYAnHSQrQLmZXWp/view?usp=drive_link)
 
 #### 기술 스택
 * **Engine:**Custom Engine
