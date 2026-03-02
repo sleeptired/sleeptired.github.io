@@ -25,8 +25,8 @@ order: 1
 * [🎮 EdgeDrive 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/1MlNrUyBR4Y8X9iZbZRqJd8Fl0opmYGai/view?usp=drive_link)
 
 ####기술 스택
-* **Engine:**Unreal Engine**
-* **Language:**C++, Blue Print**
+* **Engine:**Unreal Engine
+* **Language:**C++, Blue Print
 
 <h2 style="font-size: 36px;">2. Wothingthing</h2>
 **Katana ZERO , ThingThing 스타일의 전투를 구현한 2D 액션 게임**  
@@ -40,8 +40,8 @@ order: 1
 * [🎮 Wothingthing 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/1MlNrUyBR4Y8X9iZbZRqJd8Fl0opmYGai/view?usp=drive_link)
 
 #### 기술 스택
-* **Engine:**Custom Engine**
-* **Language:**C++**
+* **Engine:**Custom Engine
+* **Language:**C++
 
 <h2 style="font-size: 36px;">3. 3D_MOBA_NETWORK_GAME</h2>
 **Unity Netcode 기반 3D 쿼터뷰 MOBA 핵심 시스템 구현**  
@@ -49,8 +49,8 @@ order: 1
 * [💻 3D_MOBA_NETWORK_GAME GitHub Repository](https://github.com/sleeptired/3D_MOBA_Network_Game)  
 
 #### 기술 스택
-* **Engine:**Unity**
-* **Language:**C#**
+* **Engine:**Unity
+* **Language:**C#
 
 <h2 style="font-size: 36px;">4. Hex_Ris</h2>
 **장애물 회피와 Tetris 퍼즐 요소를 결합한 아케이드 스타일의 2D 게임**  
@@ -64,8 +64,8 @@ order: 1
 * [🎮 Hex_Ris< 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/1SJOiHPMDVZq-0CyFuqYAnHSQrQLmZXWp/view?usp=drive_link)
 
 #### 기술 스택
-* **Engine:**C-Processing**
-* **Language:**C**
+* **Engine:**C-Processing
+* **Language:**C
 
 <h2 style="font-size: 36px;">5. 2D Bomberman</h2>
 ** OpenGL을 활용한 커스텀 엔진으로 만든 2D 봄버맨**  
@@ -75,8 +75,8 @@ order: 1
 * [💻 OpenGL Custom Engine< GitHub Repository](https://github.com/sleeptired/OpenGL-Setting)
 
 #### 기술 스택
-* **Engine:**Custom Engine**
-* **Language:**C++, OpenGL, Json**
+* **Engine:**Custom Engine
+* **Language:**C++, OpenGL, Json
 
 <h2 style="font-size: 36px;">6. 부산 테마의 2D 플랫폼 게임</h2>
 **부산 명소를 알려주는 Top-down게임 + 종합 미니게임**  
@@ -85,8 +85,8 @@ order: 1
 * [📂 부산 테마의 2D 플랫폼 게임< 원본 프로젝트 파일 (Google Drive)](https://drive.google.com/file/d/150W0ksUqeJN80VsnFXbeKRicjly6Qnum/view?usp=drive_link)
 
 #### 기술 스택
-* **Engine:**Unity**
-* **Language:**C#**
+* **Engine:**Unity
+* **Language:**C#
 
 <h2 style="font-size: 36px;">7. 2D Hack and Slash Game</h2>
 **Vampire Survivors 장르의 2D 게임**  
@@ -95,6 +95,6 @@ order: 1
 * [📂 2D Hack and Slash< 원본 프로젝트 파일 (Google Drive)](https://drive.google.com/file/d/1ZYXaIvMErP05oNDu-xZCh4a9ssUIK70I/view?usp=drive_link)
 
 #### 기술 스택
-* **Engine:**Unity**
-* **Language:**C#**
+* **Engine:**Unity
+* **Language:**C#
 
