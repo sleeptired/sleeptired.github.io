@@ -1,8 +1,8 @@
 ---
-title: "2026-03-29 TIL (weekend)"
+title: "2026-03-29 TIL (Weekend)"
 date: 2026-03-29 08:00:00 +0900
 categories: ["TIL(Today I Learned)", "2026-03-29"]
-tags: [TIL, "2026", 내일배움캠프, C++]
+tags: [TIL, "2026", 내일배움캠프, C++, 팀프로젝트, Weekend]
 math: true
 ---
 
