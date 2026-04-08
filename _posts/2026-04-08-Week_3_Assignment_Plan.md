@@ -40,8 +40,22 @@ math: true
 
 ## IA_Move과 IA_Look Axis3D로 설정
 
-## Space Bar (위): Modifier -> Swizzle Input Axis Values (Order를 ZYX로 설정. X축 입력을 Z축으로 돌려줍니다)
-## Left Shift (아래): Modifier -> Swizzle Input Axis Values (ZYX), Negate (Z축 -1)
+# 이유 조사할 리스트
 
-## E 키 (Roll 우회전): Modifier -> Swizzle Input Axis Values (ZYX) 
-## Q 키 (Roll 좌회전): Modifier -> Swizzle Input Axis Values (ZYX), Negate
+## Space Bar (위): Modifier -> Swizzle Input Axis Values (Order를 ZYX로 설정. X축 입력을 Z축으로 돌려줍니다) 이유?
+## Left Shift (아래): Modifier -> Swizzle Input Axis Values (ZYX), Negate (Z축 -1) 이유?
+
+## E 키 (Roll 우회전): Modifier -> Swizzle Input Axis Values (ZYX) 이유?
+## Q 키 (Roll 좌회전): Modifier -> Swizzle Input Axis Values (ZYX), Negate 이유?
+
+## void AWeek3Drone::Move(const FInputActionValue& Value) 이유?
+{
+    // 입력이 들어오면 벡터로 저장 (W/S -> X, A/D -> Y, Space/Shift -> Z)
+    MoveInput = Value.Get<FVector>();
+}
+
+## void AWeek3Drone::Look(const FInputActionValue& Value) 이유?
+{
+    // 입력이 들어오면 벡터로 저장 (MouseX -> X, MouseY -> Y, Q/E -> Z)
+    LookInput = Value.Get<FVector>();
+}
