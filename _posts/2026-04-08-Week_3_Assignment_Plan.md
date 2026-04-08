@@ -48,14 +48,3 @@ math: true
 ## E 키 (Roll 우회전): Modifier -> Swizzle Input Axis Values (ZYX) 이유?
 ## Q 키 (Roll 좌회전): Modifier -> Swizzle Input Axis Values (ZYX), Negate 이유?
 
-## void AWeek3Drone::Move(const FInputActionValue& Value) 이유?
-{
-    // 입력이 들어오면 벡터로 저장 (W/S -> X, A/D -> Y, Space/Shift -> Z)
-    MoveInput = Value.Get<FVector>();
-}
-
-## void AWeek3Drone::Look(const FInputActionValue& Value) 이유?
-{
-    // 입력이 들어오면 벡터로 저장 (MouseX -> X, MouseY -> Y, Q/E -> Z)
-    LookInput = Value.Get<FVector>();
-}
