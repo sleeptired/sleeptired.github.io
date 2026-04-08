@@ -37,3 +37,11 @@ math: true
 조건에 따라, 키보드 및 마우스 입력값을 단순히 엔진 함수에 넘겨주는 것이 아니라, **DeltaTime과 벡터(Vector), 로테이터(Rotator)를 활용하여 트랜스폼(Transform)의 위치와 회전값을 직접 수학적으로 계산하고 갱신(SetActorLocation, SetActorRotation)하는 방식**으로 구현할 예정입니다.
 
 ## SpringArmComp->bUsePawnControlRotation = false; 하는이유
+
+## IA_Move과 IA_Look Axis3D로 설정
+
+## Space Bar (위): Modifier -> Swizzle Input Axis Values (Order를 ZYX로 설정. X축 입력을 Z축으로 돌려줍니다)
+## Left Shift (아래): Modifier -> Swizzle Input Axis Values (ZYX), Negate (Z축 -1)
+
+## E 키 (Roll 우회전): Modifier -> Swizzle Input Axis Values (ZYX) 
+## Q 키 (Roll 좌회전): Modifier -> Swizzle Input Axis Values (ZYX), Negate
