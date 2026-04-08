@@ -48,3 +48,5 @@ math: true
 ## E 키 (Roll 우회전): Modifier -> Swizzle Input Axis Values (ZYX) 이유?
 ## Q 키 (Roll 좌회전): Modifier -> Swizzle Input Axis Values (ZYX), Negate 이유?
 
+## CharacterMovement를 사용하지 못하므로 Tick마다 위치값을 갱신하고 입력 받은 값을 더하고 그런과정을 거쳐야한다 그래서 SetupPlayerInputComponent에서 키를 뗐을 때 멈추게 하는 함수를 구현해야함
+
