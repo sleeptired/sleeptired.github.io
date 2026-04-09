@@ -50,3 +50,6 @@ math: true
 
 ## CharacterMovement를 사용하지 못하므로 Tick마다 위치값을 갱신하고 입력 받은 값을 더하고 그런과정을 거쳐야한다 그래서 SetupPlayerInputComponent에서 키를 뗐을 때 멈추게 하는 함수를 구현해야함
 
+## Local로 계산하는 이유 (드론 자기 자신을 기준으로 한 앞, 뒤, 위, 아래를 정해야해서)
+
+## LookInput은 초기화를 하는데 MoveInput은 초기화 안하는 이유
