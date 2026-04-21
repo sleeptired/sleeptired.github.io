@@ -199,3 +199,11 @@ void AWeek3Drone::UpdateMovement(float DeltaTime) { /* ... */ }
 
 ### 랜덤스폰 좀 더 손보기 (지금은
 
+<br>
+
+## 8번과제
+
+### 아이템
+
+
+
