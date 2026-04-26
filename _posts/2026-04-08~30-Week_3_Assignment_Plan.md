@@ -213,6 +213,8 @@ void AWeek3Drone::UpdateMovement(float DeltaTime) { /* ... */ }
 
 <br>
 
+
+
 ## 8번과제
 
 ### 아이템 (사라지는 애들)
@@ -221,6 +223,12 @@ void AWeek3Drone::UpdateMovement(float DeltaTime) { /* ... */ }
 ### 장애물
 기어,가시 (TrapBase로 따로 묶어서 관리)
 지뢰는 단독으로 사용
+
+
+3-4 22:34 데미지처리부분 
+기어랑 움직이는 가시, 지뢰처리 담당보기
+
+기어 물어보기
 
 ### 규칙
 
