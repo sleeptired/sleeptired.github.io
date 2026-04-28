@@ -181,38 +181,139 @@ void AWeek3Drone::UpdateMovement(float DeltaTime) { /* ... */ }
 
 <br>
 
-## [6번 과제] 주의사항 및 제약 조건
+## [6번 과제] 동적 퍼즐 오브젝트 및 랜덤 스포너 시스템 구현
 
-
-
-## 개선 및 추가 할 사항  
-
-> 마우스 휠로 사용해서 앞뒤로 회전하는 기능 추가 예정(짐벌락 고려) - 7번
-> 자연스로운 모션 (이동할 떄 기울기) 추가 예정 - 7번
-
-
-## 6번과제 완료 (개선 및 추가 할 사항)
-
-### 회전하는 오브젝트 로직수정 (지금 좌우로 움직이는데 톱니바퀴처럼 움직이게 스태틱 매쉬 값이나 회전 값 수정) 
--> 수정한 법
-언리얼 엔진의 FRotator는 우리가 흔히 아는 (X, Y, Z) 순서가 아니라, 비행기 조향 기준인 (Pitch, Yaw, Roll) 순서로 되어 있습니다.
-
-1번째 값 (Pitch = Y축): 고개를 앞뒤로 끄덕이는 회전 (물레방아, 자동차 바퀴, 톱니바퀴)
-
-2번째 값 (Yaw = Z축): 고개를 좌우로 젓는 회전 (제자리 팽이, 피겨 스케이팅, 드론 방향 전환)
-
-3번째 값 (Roll = X축): 고개를 옆으로 갸우뚱하는 회전 (비행기 날개 기울기)
-
-그래서 pitch를 수정
-
-### Platform 방향값도 지정가능하게하고 구조체로 변수 관리하게 함
-
-### 타이머 오브젝트 (이펙트나 좀 더 좋은 아이디어로 구현하기 
-
-### 랜덤스폰 좀 더 손보기 (챕터 3-3 강의에 동일한 개념을 알려줌- 강의는 아이템 랜덤 생성)
+이번 과제에서는 단순한 액터 배치를 넘어, **프레임 독립성(DeltaTime)**을 보장하는 이동/회전 기믹과 성능 최적화를 고려한 **타이머 시스템**, 그리고 매번 새로운 경험을 주는 **동적 랜덤 스포너**를 구현했습니다.
 
 <br>
 
+### 1. 프레임 독립적인 동적 트랜스폼 제어 (Tick & DeltaTime)
+
+게임은 유저의 PC 성능(FPS)에 따라 매 프레임 계산 주기가 달라집니다. 어떤 환경에서도 퍼즐 기믹이 일정한 속도로 움직이게 하려면 반드시 `DeltaTime`을 활용해야 합니다.
+
+### 회전 로직 (`Week3Gear.cpp`)
+기어(톱니바퀴)나 장애물은 제자리에서 회전해야 합니다. 절대 좌표가 아닌 액터 자신의 축을 기준으로 회전시키기 위해 `AddActorLocalRotation`을 사용했습니다.
+
+```cpp
+void AWeek3Gear::UpdateRotation(float DeltaTime)
+{
+    // RotationSpeed(회전 속도)에 프레임 지연 시간(DeltaTime)을 곱해 기기 성능과 무관하게 일정한 회전을 보장합니다.
+    AddActorLocalRotation(RotationSpeed * DeltaTime);
+}
+```
+
+<br>
+
+### 2. 왕복 이동 로직
+엘리베이터나 움직이는 발판은 지정된 범위를 넘어가지 않고 왕복해야 합니다. 시작 위치(`StartLocation`)를 기준으로 이동 거리를 계산하고, 최대 범위(`MaxRange`)에 도달하면 방향을 뒤집는 로직을 설계했습니다.
+
+```cpp
+void AWeek3MovePlatform::UpdateMovement(float DeltaTime)
+{
+    // 1. 현재 방향 * 속도 * 델타타임으로 이동량 계산
+    FVector DeltaLocation = Settings.MoveDirection * Settings.MoveSpeed * DeltaTime;
+    AddActorWorldOffset(DeltaLocation, true); // true: 스윕(Sweep) 충돌 검사 켬
+
+    // 2. 기준점으로부터 얼마나 멀어졌는지 거리 계산
+    float DistanceMoved = FVector::Distance(StartLocation, GetActorLocation());
+
+    // 3. 설정한 범위를 벗어났다면?
+    if (DistanceMoved >= Settings.MaxRange)
+    {
+        // 범위를 초과한 만큼 다시 뒤로 당겨주는 보정(Correction) 작업
+        float Overshoot = DistanceMoved - Settings.MaxRange;
+        FVector Correction = -Settings.MoveDirection * Overshoot;
+        AddActorWorldOffset(Correction, true);
+
+        // 이동 방향을 완전히 반대로 뒤집음 (*= -1.0f)
+        Settings.MoveDirection *= -1.0f;
+
+        // 새로운 왕복의 시작점이므로 현재 위치를 다시 기준점으로 갱신
+        StartLocation = GetActorLocation();
+    }
+}
+```
+
+<br>
+
+### 타이머 시스템 활용 (Tick 최적화)
+"일정 시간 뒤에 폭발한다"는 기믹을 만들 때, `Tick`에서 매 프레임 시간을 빼는(`Time -= DeltaTime`) 방식은 비효율적입니다. 언리얼 엔진의 `TimerManager`를 사용하면 이벤트 기반으로 성능 낭비 없이 로직을 처리할 수 있습니다.
+
+```cpp
+// 1. Tick 함수를 아예 꺼버려서 불필요한 연산을 원천 차단합니다.
+PrimaryActorTick.bCanEverTick = false; 
+
+// 2. 구체(TriggerSphere)에 무언가 닿았을 때만 이벤트가 발생합니다.
+void AWeek3DetectMine::OnOverlapBegin(...)
+{
+    if (!bIsTriggered && OtherActor && OtherActor != this)
+    {
+        bIsTriggered = true; // 중복 실행 방지
+        
+        // 3. 타이머 매니저를 통해 ExplosionDelay(설정된 대기 시간) 이후에 Explode() 함수를 딱 한 번(false) 실행하도록 예약합니다.
+        GetWorld()->GetTimerManager().SetTimer(
+            ExplosionTimerHandle, 
+            this, 
+            &AWeek3DetectMine::Explode, 
+            Settings.ExplosionDelay, 
+            false
+        );
+    }
+}
+```
+
+<br>
+
+### 동적 스폰 및 랜덤 속성 부여 
+에디터에서 기믹을 하나씩 배치하는 수고를 덜고, 매 게임마다 다른 퍼즐 코스를 제공하기 위해 `SpawnActor`와 `FMath::RandRange`를 활용한 스포너를 제작했습니다.
+
+#### 무작위 생성 로직
+* **스폰 범위 제어:** `UBoxComponent`를 추가하여 스포너가 맵 어느 범위 안에서 퍼즐을 흩뿌릴지 눈으로 보고 설정할 수 있게 했습니다.
+* **클래스 랜덤 추출:** 배열(`PlatformClassesToSpawn`)에 여러 기믹 클래스를 넣어두고, 인덱스를 무작위로 뽑아 스폰할 액터를 결정합니다.
+* **독립적인 속성 부여:** 가장 중요한 부분입니다. 스폰된 액터가 '회전 기믹'인지 '이동 기믹'인지 캐스팅(`Cast`)으로 확인한 후, 각자 다른 속도와 방향을 무작위로 부여합니다.
+
+```cpp
+void AWeek3PuzzleSpawner::ApplyRandomSettings(AActor* SpawnedActor)
+{
+    // 만약 방금 스폰된 액터가 '이동 발판' 이라면?
+    if (AWeek3MovePlatform* MovingPlatform = Cast<AWeek3MovePlatform>(SpawnedActor))
+    {
+        FMovePlatformSettings RandomSettings;
+        RandomSettings.MoveSpeed = FMath::RandRange(100.0f, 800.0f); // 속도 랜덤
+        RandomSettings.MaxRange = FMath::RandRange(500.0f, 1500.0f); // 이동 거리 랜덤
+        RandomSettings.MoveDirection = FVector( // 이동 방향(XYZ) 완전 무작위
+            FMath::RandRange(-1.0f, 1.0f),
+            FMath::RandRange(-1.0f, 1.0f),
+            FMath::RandRange(-1.0f, 1.0f)
+        );
+        MovingPlatform->SetPlatformSettings(RandomSettings);
+    }
+    // 만약 방금 스폰된 액터가 '회전 기어' 라면?
+    else if (AWeek3Gear* Gear = Cast<AWeek3Gear>(SpawnedActor))
+    {
+        FRotator RandomSpin = FRotator(
+            FMath::RandRange(-180.0f, 180.0f), // Pitch, Yaw, Roll 랜덤 회전
+            FMath::RandRange(-180.0f, 180.0f),
+            FMath::RandRange(-180.0f, 180.0f)
+        );
+        Gear->SetGearRotation(RandomSpin);
+    }
+}
+```
+
+<br>
+
+### Struct를 활용한 설계 포인트
+코드 내부를 보면 기믹의 속성들을 개별 변수로 흩어놓지 않고 `FMovePlatformSettings`나 `FMineTrapSettings` 같은 구조체 하나로 묶어서 관리했습니다. 
+
+이렇게 설계하면 위 예시 코드처럼 **"설정값 통째로 넘겨주기 (`SetPlatformSettings`)"**가 가능해져, 스포너에서 무작위로 만든 세팅을 액터에게 주입할 때 코드가 매우 깔끔해지고 유지보수가 편리해집니다.
+
+
+<br>
+
+---
+
+<br>
 
 
 ## 8번과제
