@@ -113,7 +113,7 @@ bool UGameplayStatics::ApplyRadialDamage(
 
 ## UDamageType 엔진 기본 헤더
 
-## 클래스 설계 철학 (분석)
+### 클래스 설계 철학 (분석)
 
 엔진 헤더 상단의 주석을 보면 아주 중요한 아키텍처 규칙이 적혀 있습니다.
 
@@ -124,7 +124,7 @@ bool UGameplayStatics::ApplyRadialDamage(
 
 <br>
 
-## 멤버 변수(Property)
+### 멤버 변수(Property)
 
 이 클래스는 단순한 데미지 수치(HP 깎기) 외에, **'물리 엔진(RigidBody)'**과 **'파괴 시스템(Destruction)'**에 특화된 설정들을 기본적으로 제공합니다.
 
@@ -144,3 +144,53 @@ bool UGameplayStatics::ApplyRadialDamage(
 > `bool` 타입을 쓰지 않고 왜 저렇게 썼을까요? C++의 극한의 메모리 최적화 기법인 **'비트 필드(Bit Field)'**입니다. 
 > 원래 `bool` 타입 하나를 선언하면 메모리에서 최소 1바이트(8비트)를 차지합니다. 하지만 저렇게 선언하면 `uint32`(32비트) 공간 딱 하나를 쪼개서 **"이 변수는 1비트만 쓸게!"**라고 선언하는 것입니다. 변수 3개가 모여있어도 3바이트가 아니라 3비트만 차지하게 됩니다. 
 > 게임 엔진처럼 0.001초라도 아껴야 하는 코어 시스템에서는 이런 세심한 최적화가 필수적입니다!
+
+<br>
+
+---
+
+<br>
+
+## TakeDamage 함수 내부 코드 분석
+
+```cpp
+float AMasterClassCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+    // 1. 기본 데미지 계산
+    const float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+    // 2. 데미지 타입 원본(CDO) 가져오기
+    const UDamageType* DT2 = DamageEvent.DamageTypeClass->GetDefaultObject<UDamageType>();\
+
+    //월드가 가한 데미지(bCausedByWorld == true)라면 실행
+	  if (DT2 && DT2->bCausedByWorld)
+	  {
+		  // 월드 데미지(낙사, 트랩 등)일 경우 특별 처리 (예: 비명 소리 다르게 재생)
+		  UE_LOG(LogTemp, Warning, TEXT("Environmental Damage Received!"));
+	  }
+
+    //컨트롤러, EventInstigator)'이 존재한다면 실행됩니다. 즉, 주인 없는 함정이 아니라 누군가 의도를 가지고 나를 공격했다는 뜻
+	  if (EventInstigator)
+	  {
+	  	UE_LOG(LogTemp, Warning, TEXT("I'M Enemy!"));
+	  	// 일반적인 적의 공격인 경우 타겟팅 로직 실행
+  	}
+
+
+    // 3. 최종 데미지 반환
+    return ActualDamage;
+}
+```
+
+### CDO를 가져오는 이유
+
+* 총알을 100발 맞았다고 해서 메모리에 `DamageType` 객체를 100개 찍어내면(`NewObject`) 게임이 엄청나게 느려집니다. 데미지 타입은 수치만 확인하면 되는 **'설명서'** 같은 존재이므로, 매번 새로 만들지 않고 메모리에 미리 올려둔 **'원본 설명서(CDO)'**를 다 같이 돌려보며 참조하는 것입니다.
+* `GetDefaultObject()`는 바로 이 원본 설명서를 서랍에서 꺼내오는 함수입니다.
+
+<br>
+
+### 부모 클래스(`UDamageType`)로 가져오는가?
+
+* **주석:** "지금은 커스텀 데미지 타입을 안 만들어서 부모가 가져와서 써도 된다고 함"
+* 만약 화염 데미지(`UFireDamageType`)나 독 데미지(`UPoisonDamageType`)를 C++로 새로 만들었다면, 그 안에 있는 화상 시간이나 독 틱(Tick) 데미지를 꺼내기 위해 형변환(Cast)을 해야 합니다.
+* 하지만 지금은 그런 특수 데미지를 만들지 않은 **순정 상태**입니다. 엔진이 기본으로 제공하는 가장 윗세대 부모인 `UDamageType`만 가져와도 물리 넉백 수치(`DamageImpulse`)나 환경 데미지 여부(`bCausedByWorld`) 같은 기본 정보는 충분히 다 꺼내볼 수 있기 때문에, 굳이 자식 클래스로 변환할 필요가 없다는 뜻입니다.
