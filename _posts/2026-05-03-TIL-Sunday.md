@@ -194,3 +194,63 @@ float AMasterClassCharacter::TakeDamage(float DamageAmount, FDamageEvent const& 
 * **주석:** "지금은 커스텀 데미지 타입을 안 만들어서 부모가 가져와서 써도 된다고 함"
 * 만약 화염 데미지(`UFireDamageType`)나 독 데미지(`UPoisonDamageType`)를 C++로 새로 만들었다면, 그 안에 있는 화상 시간이나 독 틱(Tick) 데미지를 꺼내기 위해 형변환(Cast)을 해야 합니다.
 * 하지만 지금은 그런 특수 데미지를 만들지 않은 **순정 상태**입니다. 엔진이 기본으로 제공하는 가장 윗세대 부모인 `UDamageType`만 가져와도 물리 넉백 수치(`DamageImpulse`)나 환경 데미지 여부(`bCausedByWorld`) 같은 기본 정보는 충분히 다 꺼내볼 수 있기 때문에, 굳이 자식 클래스로 변환할 필요가 없다는 뜻입니다.
+
+### 커스텀 데미지 vs Base 데미지 차이점
+
+두 코드는 본질적으로 **'데미지 설명서(CDO)'를 꺼내서 읽는 방법**과 **그 안에 적힌 내용**이 다릅니다.
+
+| 구분 | Base  상태 | 커스텀 상태 |
+| :--- | :--- | :--- |
+| **클래스 (설명서 종류)** | 엔진 기본 제공 `UDamageType` | 내가 직접 만든 `UFireDamageType` |
+| **데이터 가져오기 (CDO)** | `GetDefaultObject<UDamageType>()` | `GetDefaultObject<UFireDamageType>()` |
+| **형변환(Cast) 필요성** | ❌ 필요 없음 (부모 그대로 사용) | ⭕ **필요함** (부모를 자식 형태로 변환) |
+| **접근하는 변수** | `bCausedByWorld` (환경 데미지인가?) | `BurnDuration`, `ArmorPenetration` (화상 시간, 관통력) |
+| **로직의 목적** | **상황 판단:** "누가 날 때렸지? 반격해야 하나?" | **상태 이상/수치 변경:** "데미지 뻥튀기! 불타는 이펙트 켜기!" |
+
+<br>
+
+#### 핵심 차이점 상세 분석
+
+* 1. 형변환(Casting)의 유무
+* **이전 코드:** 엔진이 주는 기본 `UDamageType` 설명서를 있는 그대로 읽었습니다.
+* **새로운 코드:** 엔진이 넘겨준 기본 설명서를 **"화염 데미지 전용 설명서(`UFireDamageType`)"로 번역(형변환)**해서 읽었습니다. 이렇게 해야만 내가 C++로 직접 추가했던 `BurnDuration`(화상 시간) 같은 고유 변수에 접근할 수 있기 때문입니다.
+
+* 2. 데미지 수치(HP)의 조작 여부
+* **이전 코드:** 데미지 수치(`ActualDamage`)는 건드리지 않고, 단지 어그로를 끌거나(I'M Enemy!) 낙사 비명 소리를 내는 **행동(리액션)**에만 집중했습니다.
+* **새로운 코드:** `ArmorPenetration`(방어력 관통) 수치를 곱해서 **실제로 깎이는 데미지 수치(`FinalDamage`) 자체를 더 아프게 조작(수정)**했습니다.
+
+* 3. 상태 이상(디버프)의 부여
+* **새로운 코드**는 단순히 피를 깎는 것에서 끝나지 않고, `ApplyBurnEffect()`라는 내 캐릭터의 함수를 호출하여 5초 동안 불타는 파티클이 나오거나 지속 피해(틱 데미지)를 입히는 **특수 기능**을 추가로 실행했습니다.
+
+<br>
+
+---
+
+실제 게임을 만들 때는 이 두 가지를 따로 쓰지 않고 아래처럼 합쳐서 사용합니다. 
+기본적인 상황 판단(순정 기능)도 하면서, 특수한 화염 기능(커스텀 기능)도 동시에 작동하게 만드는 것입니다.
+```cpp
+float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+    float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+    // 1. 일단 부모(순정) 형태로 가져와서 기본 체크를 한다!
+    const UDamageType* BaseDamage = DamageEvent.DamageTypeClass->GetDefaultObject<UDamageType>();
+    
+    if (BaseDamage && BaseDamage->bCausedByWorld) {
+        // 낙사나 트랩이면 비명 지르기!
+    } else if (EventInstigator) {
+        // 적이 때렸으면 타겟팅 로직 실행!
+    }
+
+    // 2. 혹시 이게 '화염' 데미지인지 자식 형태로 캐스팅(확인) 해본다!
+    const UFireDamageType* FireDamage = Cast<UFireDamageType>(BaseDamage);
+    
+    if (FireDamage) {
+        // 맞다! 화염 데미지면 방어력을 무시하고 화상 이펙트를 켠다!
+        FinalDamage *= (1.0f + FireDamage->ArmorPenetration);
+        this->ApplyBurnEffect(FireDamage->BurnDuration);
+    }
+
+    CurrentHP -= FinalDamage;
+    return FinalDamage;
+}
