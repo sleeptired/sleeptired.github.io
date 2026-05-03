@@ -37,7 +37,7 @@ float UGameplayStatics::ApplyDamage(
 );
 ```
 
-| 매개변수 이름 | 타입 | 의미 (역할) | (예시) |
+| 매개변수 이름 | 타입 | 의미 (역할) | 예시 |
 | :--- | :--- | :--- | :--- |
 | **`DamagedActor`** | `AActor*` | **누구를 때릴 것인가? (피격자)**<br>데미지를 받을 대상입니다. | 트레이스에 맞은 대상(`HitActor`)이나, 충돌체에 닿은 대상(`OtherActor`)을 그대로 넣습니다. |
 | **`BaseDamage`** | `float` | **얼마나 아프게 때릴 것인가? (피해량)**<br>깎을 데미지의 기본 수치입니다. | `10.f`, `50.f` 등 무기나 스킬의 데미지 수치를 넣습니다. |
@@ -45,7 +45,65 @@ float UGameplayStatics::ApplyDamage(
 | **`DamageCauser`** | `AActor*` | **무엇으로 때렸는가? (직접적인 흉기)**<br>피격자와 실제로 물리적인 접촉을 한 액터입니다. | 총알 액터 그 자체, 휘두른 칼 액터, 또는 타격 판정을 가진 캐릭터 자신(`this`)을 넣습니다. |
 | **`DamageTypeClass`** | `TSubclassOf<UDamageType>` | **어떤 속성으로 때렸는가? (데미지 타입)**<br>불, 독, 물리 타격 등 데미지의 성격을 규정합니다. 피격자 측에서 분기 처리를 할 때 쓰입니다. | 기본 데미지라면 `UDamageType::StaticClass()`를 넣고, 화염 속성이라면 직접 만든 `UFireDamageType::StaticClass()`를 넣습니다. |
 
-* DamageTypeClass는 언리얼 엔진에서 C++ 클래스를 생성할 때 부모 클래스로 선택할 수 있는 `UDamageType`으로 생성해 사용 가능하다.
+<br>
+
+### `UGameplayStatics::ApplyPointDamage` 매개변수 분석
+
+```cpp
+float UGameplayStatics::ApplyPointDamage(
+    AActor* DamagedActor, 
+    float BaseDamage, 
+    const FVector& HitFromDirection, 
+    const FHitResult& HitInfo, 
+    AController* EventInstigator, 
+    AActor* DamageCauser, 
+    TSubclassOf<UDamageType> DamageTypeClass
+);
+```
+
+| 매개변수 이름 | 타입 | 의미 (역할) | 예시 |
+| :--- | :--- | :--- | :--- |
+| **`DamagedActor`** | `AActor*` | **누구를 때릴 것인가?** | `Hit.GetActor()` (맞은 적 액터) |
+| **`BaseDamage`** | `float` | **얼마나 아프게 때릴 것인가?** | `30.f` (총알 1발의 데미지) |
+| **`HitFromDirection`** | `const FVector&` | **어느 방향에서 때렸는가? (밀려날 방향)**<br>피격자가 데미지를 받고 어느 쪽으로 피를 흘리거나 넉백될지 계산할 때 씁니다. | 총구의 앞쪽 방향(`GetActorForwardVector()`)이나 날아가는 총알의 이동 방향 |
+| **`HitInfo`** | `const FHitResult&` | **정확히 어디를 맞았는가? (타격 상세 정보)**<br>맞은 부위(뼈 이름), 뚫린 표면의 재질, 정확한 충돌 좌표 등이 담긴 구조체입니다. 헤드샷 판정에 필수입니다. | 트레이스를 쏴서 얻어낸 `Hit` 결과물 자체를 그대로 던져줍니다. |
+| **`EventInstigator`** | `AController*` | **누가 지시했는가? (조종자)** | `GetInstigatorController()` |
+| **`DamageCauser`** | `AActor*` | **무엇으로 때렸는가? (흉기)** | `this` (총알 액터 자신) |
+| **`DamageTypeClass`** | `TSubclassOf<UDamageType>` | **어떤 속성인가?** | `UDamageType::StaticClass()` |
+
+<br>
+
+### `UGameplayStatics::ApplyRadialDamage` 매개변수 분석
+
+```cpp
+bool UGameplayStatics::ApplyRadialDamage(
+    const UObject* WorldContextObject, 
+    float BaseDamage, 
+    const FVector& Origin, 
+    float DamageRadius, 
+    TSubclassOf<UDamageType> DamageTypeClass, 
+    const TArray<AActor*>& IgnoreActors, 
+    AActor* DamageCauser = nullptr, 
+    AController* InstigatedByController = nullptr, 
+    bool bDoFullDamage = false, 
+    ECollisionChannel DamagePreventionChannel = ECC_Visibility
+);
+```
+
+| 매개변수 이름 | 타입 | 의미 (역할) | 예시 |
+| :--- | :--- | :--- | :--- |
+| **`WorldContextObject`** | `const UObject*` | **어느 월드에서 터뜨릴 것인가?**<br>폭발을 처리할 월드의 컨텍스트입니다. | 보통 자기 자신(`this`)을 넘기면 엔진이 알아서 현재 월드를 찾습니다. |
+| **`BaseDamage`** | `float` | **최대 데미지가 얼마인가?** | `100.f` (수류탄 직격 데미지) |
+| **`Origin`** | `const FVector&` | **어디서 터졌는가? (폭심지)**<br>폭발이 일어나는 구체의 중심점(3D 좌표)입니다. | 수류탄의 현재 위치 (`GetActorLocation()`) |
+| **`DamageRadius`** | `float` | **어디까지 피해를 줄 것인가? (폭발 반경)** | `500.f` (반경 5미터 내의 적들 타격) |
+| **`DamageTypeClass`** | `TSubclassOf<UDamageType>` | **어떤 속성인가?** | 폭발 전용 데미지 클래스 등 |
+| **`IgnoreActors`** | `const TArray<AActor*>&` | **누구는 안 맞게 할 것인가? (예외 목록)**<br>폭발 범위 안에 있어도 데미지를 무시할 액터들의 배열입니다. | 아군끼리 피해를 안 입게 하거나, 수류탄을 던진 '나 자신'을 배열에 넣어 피해갑니다. |
+| **`DamageCauser`** | `AActor*` | **무엇이 터졌는가? (흉기)** | `this` (수류탄 액터) |
+| **`InstigatedByController`** | `AController*` | **누가 던졌는가? (조종자)** | `GetInstigatorController()` |
+| **`bDoFullDamage`** | `bool` | **범위 내에 무조건 100% 데미지를 줄 것인가?**<br>`true`면 가장자리에 있어도 즉사, `false`면 거리가 멀어질수록 데미지가 약하게(감쇄) 들어갑니다. | `true` 또는 `false` |
+| **`DamagePreventionChannel`** | `ECollisionChannel` | **어떤 벽에 막히게 할 것인가? (엄폐물 판정)**<br>폭발 중심과 적 사이에 이 채널을 가진 벽이 있으면 데미지를 받지 않습니다. (벽 뒤에 숨기 기능) | 보통 `ECC_Visibility` (눈에 보이는 벽)를 사용합니다. |
+
+* **DamageTypeClass는 언리얼 엔진에서 C++ 클래스를 생성할 때 부모 클래스로 선택할 수 있는 `UDamageType`으로 생성해 사용 가능하다.**
 
 <br>
 
