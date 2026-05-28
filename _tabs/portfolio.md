@@ -14,7 +14,36 @@ order: 1
 
 ## 🎮 Projects
 
-<h2 style="font-size: 36px;">1. EdgeDrive</h2>
+<h2 style="font-size: 36px;">1. 동적 환경 반응형 스플라인 기반 자율주행 및 사고 취약 구간 분석 시뮬레이터</h2>
+**UE5 Chaos 물리 엔진 기반 자율주행 차량 시뮬레이터 시스템**  
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
+  <iframe src="https://www.youtube.com/embed/98hMNkjrf00" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
+</div>
+
+#### 🔗 링크
+* [💻 GitHub Repository (Private로 설정된 가능성 있음)](https://github.com/NBcampUnrealTrack/8th-Team24-CH3-Project)
+* [🎮 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/18UwBhRQGlT4UfdTuoEwf2xnTqzKzHNDC/view?usp=drive_link)
+
+#### 기술 스택
+* **Engine:** Unreal Engine
+* **Language:** C++, Blue Print
+
+
+<h2 style="font-size: 36px;">2. 콘솔 텍스트 RPG</h2>
+**C++ 기반 콘솔 텍스트 롤플레잉 게임**  
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
+  <iframe src="https://www.youtube.com/embed/t6BW6lHMCcg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
+</div>
+
+#### 🔗 링크
+* [🎮 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/18UwBhRQGlT4UfdTuoEwf2xnTqzKzHNDC/view?usp=drive_link)
+* [💻 GitHub Repository](https://github.com/Cha-nu/TeamName)
+
+#### 기술 스택
+* **Engine:** None
+* **Language:** C++
+
+<h2 style="font-size: 36px;">3. EdgeDrive</h2>
 **3D 소울라이크 보스 러시 게임**  
 <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
   <iframe src="https://www.youtube.com/embed/264Wfi25UOU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
@@ -28,7 +57,7 @@ order: 1
 * **Engine:**Unreal Engine
 * **Language:**C++, Blue Print
 
-<h2 style="font-size: 36px;">2. Wothingthing</h2>
+<h2 style="font-size: 36px;">4. Wothingthing</h2>
 **Katana ZERO , ThingThing 스타일의 전투를 구현한 2D 액션 게임**  
 <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
   <iframe src="https://www.youtube.com/embed/xpTpa-FO4aM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
@@ -43,7 +72,7 @@ order: 1
 * **Engine:**Custom Engine
 * **Language:**C++
 
-<h2 style="font-size: 36px;">3. 3D_MOBA_NETWORK_GAME</h2>
+<h2 style="font-size: 36px;">5. 3D_MOBA_NETWORK_GAME</h2>
 **Unity Netcode 기반 3D 쿼터뷰 MOBA 핵심 시스템 구현**  
 #### 🔗 링크
 * [💻 3D_MOBA_NETWORK_GAME GitHub Repository](https://github.com/sleeptired/3D_MOBA_Network_Game)  
@@ -52,7 +81,7 @@ order: 1
 * **Engine:**Unity
 * **Language:**C#
 
-<h2 style="font-size: 36px;">4. Hex_Ris</h2>
+<h2 style="font-size: 36px;">6. Hex_Ris</h2>
 **장애물 회피와 Tetris 퍼즐 요소를 결합한 아케이드 스타일의 2D 게임**  
 <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
   <iframe src="https://www.youtube.com/embed/IunCEpUlvl4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
@@ -67,7 +96,7 @@ order: 1
 * **Engine:**C-Processing
 * **Language:**C
 
-<h2 style="font-size: 36px;">5. 2D Bomberman</h2>
+<h2 style="font-size: 36px;">7. 2D Bomberman</h2>
 ** OpenGL을 활용한 커스텀 엔진으로 만든 2D 봄버맨**  
 
 #### 🔗 링크
@@ -78,7 +107,7 @@ order: 1
 * **Engine:**Custom Engine
 * **Language:**C++, OpenGL, Json
 
-<h2 style="font-size: 36px;">6. 부산 테마의 2D 플랫폼 게임</h2>
+<h2 style="font-size: 36px;">8. 부산 테마의 2D 플랫폼 게임</h2>
 **부산 명소를 알려주는 Top-down게임 + 종합 미니게임**  
 
 #### 🔗 링크
@@ -88,7 +117,7 @@ order: 1
 * **Engine:**Unity
 * **Language:**C#
 
-<h2 style="font-size: 36px;">7. 2D Hack and Slash Game</h2>
+<h2 style="font-size: 36px;">9. 2D Hack and Slash Game</h2>
 **Vampire Survivors 장르의 2D 게임**  
 
 #### 🔗 링크
