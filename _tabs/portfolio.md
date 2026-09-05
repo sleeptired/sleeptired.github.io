@@ -20,7 +20,7 @@ order: 1
   <iframe src="https://www.youtube.com/embed/A1wjoHMK-98" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
 </div>
 #### 🔗 링크
-* [💻 GitHub Repository (Private로 설정된 가능성 있음)](https://github.com/NBcampUnrealTrack/8th-Team24-CH4-Project)
+* [💻 GitHub Repository](https://github.com/NBcampUnrealTrack/8th-Team24-CH4-Project)
 * [🎮 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/118doAC1R4BDzi8IaCEhSwO09EuPrU7aC/view?usp=sharing)
 
 #### 기술 스택
@@ -35,7 +35,7 @@ order: 1
 </div>
 
 #### 🔗 링크
-* [💻 GitHub Repository (Private로 설정된 가능성 있음)](https://github.com/NBcampUnrealTrack/8th-Team24-CH3-Project)
+* [💻 GitHub Repository](https://github.com/NBcampUnrealTrack/8th-Team24-CH3-Project)
 * [🎮 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/18UwBhRQGlT4UfdTuoEwf2xnTqzKzHNDC/view?usp=drive_link)
 
 #### 기술 스택
