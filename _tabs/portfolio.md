@@ -14,6 +14,20 @@ order: 1
 
 ## 🎮 Projects
 
+<h2 style="font-size: 36px;">2. Crazy Roo - 데디케이티드 서버 기반 비대칭 협동 레일 슈터</h2>
+**UE5 + EOS 기반 멀티플레이 세션 및 로비 시스템**  
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
+  <iframe src="https://www.youtube.com/embed/A1wjoHMK-98" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
+</div>
+#### 🔗 링크
+* [💻 GitHub Repository (Private로 설정된 가능성 있음)](https://github.com/NBcampUnrealTrack/8th-Team24-CH4-Project)
+* [🎮 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/118doAC1R4BDzi8IaCEhSwO09EuPrU7aC/view?usp=sharing)
+
+#### 기술 스택
+* **Engine:** Unreal Engine 5.8
+* **Language:** C++
+
+
 <h2 style="font-size: 36px;">1. 동적 환경 반응형 스플라인 기반 자율주행 및 사고 취약 구간 분석 시뮬레이터</h2>
 **UE5 Chaos 물리 엔진 기반 자율주행 차량 시뮬레이터 시스템**  
 <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 20px;">
@@ -25,8 +39,8 @@ order: 1
 * [🎮 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/18UwBhRQGlT4UfdTuoEwf2xnTqzKzHNDC/view?usp=drive_link)
 
 #### 기술 스택
-* **Engine:** Unreal Engine
-* **Language:** C++, Blue Print
+* **Engine:** Unreal Engine 5.5
+* **Language:** C++
 
 
 <h2 style="font-size: 36px;">2. 콘솔 텍스트 RPG</h2>
@@ -54,7 +68,7 @@ order: 1
 * [🎮 EdgeDrive 플레이 가능 패키징 파일 (Build)](https://drive.google.com/file/d/1MlNrUyBR4Y8X9iZbZRqJd8Fl0opmYGai/view?usp=drive_link)
 
 ####기술 스택
-* **Engine:**Unreal Engine
+* **Engine:**Unreal Engine 5.4
 * **Language:**C++, Blue Print
 
 <h2 style="font-size: 36px;">4. Wothingthing</h2>
